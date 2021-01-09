@@ -15,7 +15,7 @@ import com.isadounikau.phrase.api.client.models.downloads.FileFormat
 
 interface PhraseApiClient {
 
-    fun projects(): List<PhraseProject>
+    suspend fun projects(): List<PhraseProject>
 
     fun project(projectId: String): PhraseProject
 

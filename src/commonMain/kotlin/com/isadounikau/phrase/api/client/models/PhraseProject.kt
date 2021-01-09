@@ -1,7 +1,10 @@
 package com.isadounikau.phrase.api.client.models
 
 import kotlinx.datetime.Instant
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PhraseProject(
     val id: String,
     val name: String,
@@ -10,7 +13,9 @@ data class PhraseProject(
     val projectImageUrl: String? = null,
     val removeProjectImage: Boolean? = null,
     val accountId: String? = null,
+    @Contextual
     val createdAt: Instant? = null,
+    @Contextual
     val updatedAt: Instant? = null
 )
 

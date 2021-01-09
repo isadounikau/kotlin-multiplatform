@@ -12,15 +12,35 @@ import com.isadounikau.phrase.api.client.models.Translation
 import com.isadounikau.phrase.api.client.models.UpdatePhraseProject
 import com.isadounikau.phrase.api.client.models.downloads.DownloadResponse
 import com.isadounikau.phrase.api.client.models.downloads.FileFormat
+import com.isadounikau.phrase.api.client.utils.Constants.PHRASE_API_HOST
 import io.ktor.client.HttpClient
+import io.ktor.client.features.defaultRequest
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.host
+import kotlinx.serialization.json.Json
 
 class PhraseApiClientImpl(
-    private val client: HttpClient = HttpClient()
-): PhraseApiClient {
+    private val authToken: String
+) : PhraseApiClient {
+    private val client: HttpClient = HttpClient {
+        defaultRequest { // this: HttpRequestBuilder ->
+            host = PHRASE_API_HOST
+            header("Authorization", "token $authToken")
+        }
+        install(JsonFeature) {
+            serializer = KotlinxSerializer(
+                json = Json {
+                    ignoreUnknownKeys = true
+                }
+            )
+        }
+    }
 
-
-    override fun projects(): List<PhraseProject> {
-        TODO("Not yet implemented")
+    override suspend fun projects(): List<PhraseProject> {
+        return client.get("/api/v2/projects")
     }
 
     override fun project(projectId: String): PhraseProject {

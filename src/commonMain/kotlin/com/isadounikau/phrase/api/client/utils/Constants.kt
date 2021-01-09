@@ -6,5 +6,5 @@ object Constants {
     const val HS_NO_CONTENT = 204
     const val HS_NOT_MODIFIED = 304
 
-    const val PHRASE_API_URL = "https://api.phraseapp.com"
+    const val PHRASE_API_HOST = "api.phraseapp.com"
 }
