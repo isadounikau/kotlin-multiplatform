@@ -2,11 +2,12 @@ plugins {
     kotlin("multiplatform") version "1.4.10"
 }
 
-group = "com.freenow"
+group = "com.isadounikau"
 version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven(url = "https://kotlin.bintray.com/kotlinx/")
 }
 
 kotlin {
@@ -39,7 +40,12 @@ kotlin {
 
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-core:1.5.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
